@@ -14,4 +14,39 @@ export default function TaskForm({ onAdd }) {
         // Se a ação falhar, retornamos os dados do formulário para que o usuário possa corrigir.
         return ok ? empty : { titulo, descricao };
     }, empty)
+
+    return (
+        <form className="task-form" action={formAction}>
+            <span className="task-form__mark" aria-hidden="true">+</span>
+            <label className="visually-hidden" htmlFor="nova-titulo">Título</label>
+
+            <input 
+                id="nova-titulo"
+                name="titulo"
+                className="task-form__input"
+                type="text"
+                placeholder="O que precisa ser feito?"
+                autoComplete="off"
+                maxLength={255}
+                required
+                defaultValue={state.titulo}
+                disabled={isPending}
+            />
+            <label className="visually-hidden" htmlFor="nova-descricao">Descrição</label>
+            <textarea
+                id="nova-descricao"
+                name="descricao"
+                className="task-form__details"
+                placeholder="Detalhes adicionais (opcional)"
+                rows={1}
+                defaultValue={state.descricao}
+                disabled={isPending}
+            />
+            
+            <button type="submit" disabled={isPending} className="button button-primary">
+                {isPending ? "Adicionando..." : "Adicionar"}
+            </button>
+
+        </form>
+    )
 }
