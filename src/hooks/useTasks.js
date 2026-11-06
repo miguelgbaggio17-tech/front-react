@@ -55,10 +55,11 @@ export function useTasks() {
 
     const toggleTask = async (task) => {
         run(async () => {
-            const updatedTask = await updateTask({ ...task, concluida: !task.concluida });
-            setTasks(prevTasks => prevTasks.map(t => t.id === updatedTask.id ? updatedTask : t));
+            const updatedTask = await updateTask(task.id, { concluida: !task.concluida });
+            
+            setTasks(prevTasks => prevTasks.map(t => t.id === task.id ? updatedTask : t));
         });
-
-        return { tasks, status, loadError, reload, actionError, clearActionError: () => setActionError(null), addTask, toggleTask };
     }
+
+    return { tasks, status, loadError, reload, actionError, clearActionError: () => setActionError(null), addTask, toggleTask };
 }

@@ -7,12 +7,12 @@ import TaskList from "./components/TaskList";
 import { useTasks } from "./hooks/useTasks"
 
 export default function App() {
-  const { tasks, status, loadError, reload, addTask, actionError, clearActionError, toggleTask } = useTasks();
+  const { tasks, status, loadError, reload, addTask, toggleTask, actionError, clearActionError } = useTasks();
 
   return (
     <main className="app">
       <section className="notebook" aria-labelledby="titulo">
-        <header className="notebook__header"> 
+        <header className="notebook__header">
           <h1 className="notebook__title" id="titulo">Tarefas</h1>
         </header>
 
@@ -32,18 +32,20 @@ export default function App() {
         {status === 'success' && (
           <>
             <TaskForm onAdd={addTask} />
+
             {actionError && (
               <div className="notice notice--error" role="alert">
                 <p>{actionError}</p>
-                <button className="button button--danger" onClick={clearActionError}>Fechar</button>
+                <button onClick={clearActionError} className="button button--danger">Fechar</button>
               </div>
             )}
+
             {tasks.length === 0 ? (
-              <div className="notice notice--info" role="status">
+              <div className="notice">
                 <p>Nenhuma tarefa cadastrada</p>
               </div>
             ) : (
-              <TaskList tasks={tasks} onToggle={toggleTask}/>
+              <TaskList tasks={tasks} onToggle={toggleTask} />
             )}
           </>
         )}
